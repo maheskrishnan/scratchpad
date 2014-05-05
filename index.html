@@ -45,7 +45,9 @@
     </tr>
     <tr>
         <td>
-            <textarea style="" ng-model="dataModel.fileContent" ng-blur="saveTopic(dataModel.currentTopic);" ng-keydown="dataModel.currentTopic.dirty=true;"></textarea>
+            <textarea style="" ng-model="dataModel.fileContent"  ng-trim='false' 
+                ng-blur="saveTopic(dataModel.currentTopic);" ng-keydown="dataModel.currentTopic.dirty=true;">
+            </textarea>
         </td>
     </tr>
 </table>
