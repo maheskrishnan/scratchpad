@@ -35,7 +35,7 @@
             <ul><li><a href="" ng-click="addTopic('Untitled')">(+) Add Topic</a></li></ul><br/>
             <ul style="">
                 <li ng-repeat="topic in dataModel.topics track by $index">
-                    <a href="" ng-click="selectTopic(topic)" ng-class="{'active':topic==dataModel.currentTopic}">{{topic.title}} <span ng-show="topic.dirty">*</span></a>
+                    <a href="" ng-click="selectTopic(topic)" ng-class="{'active':topic.fileContentKey==dataModel.currentTopic.fileContentKey}">{{topic.title}} <span ng-show="topic.dirty">*</span></a>
                 </li>
             </ul>
         </td>
