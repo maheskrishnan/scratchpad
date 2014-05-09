@@ -301,6 +301,7 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
                         }
                     }
                 });
+                $scope.dataModel.fileContent = window.localStorage[$scope.dataModel.currentTopic.fileContentKey];
             }else{
                 $scope.dataModel = {};
                 $scope.dataModel.topics = [];
