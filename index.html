@@ -40,13 +40,13 @@
             </ul>
         </td>
         <td>
-            <input type="text" ng-model="dataModel.currentTopic.title" style="width:480px;"/>
+            <input type="text" ng-model="dataModel.currentTopic.title" ng-blur="saveDataModel()" style="width:480px;"/>
         </td>
     </tr>
     <tr>
         <td>
             <textarea style="" ng-model="dataModel.fileContent"  ng-trim='false'
-                      ng-blur="saveTopic(dataModel.currentTopic);" ng-keydown="dataModel.currentTopic.dirty=true;">
+                      ng-blur="saveTopicContent(dataModel.currentTopic);" ng-keydown="dataModel.currentTopic.dirty=true;">
             </textarea>
         </td>
     </tr>
@@ -288,12 +288,13 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
-    function wikiController($scope, $rootScope, keyboardManager){
+    function wikiController($scope, $rootScope, $filter, keyboardManager){
 
         var dataModelKey = 'dataModel';
         $scope.loadData = function() {
             if (window.localStorage[dataModelKey]){
                 $scope.dataModel = JSON.parse(window.localStorage[dataModelKey]);
+				$scope.dataModel.topics.sort(function(a, b){ return a.title>b.title; });
                 angular.forEach($scope.dataModel.topics, function(topic){
                     if (topic.fileContentKey == $scope.dataModel.currentTopic.fileContentKey){
                         if (topic.title == $scope.dataModel.currentTopic.title){
@@ -309,7 +310,7 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         };
         $scope.loadData();
 
-        $scope.saveData = function() {
+        $scope.saveDataModel = function() {
             window.localStorage[dataModelKey] = JSON.stringify($scope.dataModel);
         };
 
@@ -317,20 +318,20 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
             var newTopic = {title:strTopicTitle, fileContentKey: guid()};
             $scope.dataModel.topics.push(newTopic);
             $scope.selectTopic(newTopic);
-            $scope.saveData();
+            $scope.saveDataModel();
         };
-        $scope.saveTopic = function(topic){
+        $scope.saveTopicContent = function(topic){
             window.localStorage[topic.fileContentKey]=$scope.dataModel.fileContent;
             topic.dirty=false;
         }
         $scope.selectTopic = function(topic){
             $scope.dataModel.currentTopic=topic;
             $scope.dataModel.fileContent = window.localStorage[topic.fileContentKey];
-            $scope.saveData();
+            $scope.saveDataModel();
         }
 
         keyboardManager.bind('ctrl+s', function() {
-            $scope.saveTopic($scope.dataModel.currentTopic);
+            $scope.saveTopicContent($scope.dataModel.currentTopic);
             console.log('saved successfully...');
         });
 
