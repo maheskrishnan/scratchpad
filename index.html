@@ -294,7 +294,7 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         $scope.loadData = function() {
             if (window.localStorage[dataModelKey]){
                 $scope.dataModel = JSON.parse(window.localStorage[dataModelKey]);
-				$scope.dataModel.topics.sort(function(a, b){ return a.title>b.title; });
+				$scope.dataModel.topics.sort(function(a, b){ return (a.title||'').toUpperCase() > (b.title||'').toUpperCase(); });
                 angular.forEach($scope.dataModel.topics, function(topic){
                     if (topic.fileContentKey == $scope.dataModel.currentTopic.fileContentKey){
                         if (topic.title == $scope.dataModel.currentTopic.title){
