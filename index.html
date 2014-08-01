@@ -325,7 +325,7 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
 			var exportTopic = {};
 			exportTopic.title = topic.title;
 			exportTopic.fileContentKey = topic.fileContentKey;	
-			exportTopic.fileContentKey = topic.dirty;	
+			exportTopic.dirty = topic.dirty;	
 			exportTopic.fileContent = window.localStorage[topic.fileContentKey];	
 			exportDataModel.topics.push(exportTopic);
 		});
