@@ -38,6 +38,8 @@
                     <a href="" ng-click="selectTopic(topic)" ng-class="{'active':topic.fileContentKey==dataModel.currentTopic.fileContentKey}">{{topic.title}} <span ng-show="topic.dirty">*</span></a>
                 </li>
             </ul>
+	    <br/>
+	    <ul><li><a href="" ng-click="export()">Export</a></li></ul>            
         </td>
         <td>
             <input type="text" ng-model="dataModel.currentTopic.title" ng-blur="saveDataModel()" style="width:480px;"/>
@@ -313,6 +315,12 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         $scope.saveDataModel = function() {
             window.localStorage[dataModelKey] = JSON.stringify($scope.dataModel);
         };
+
+
+	$scope.export = function() {
+		alert(JSON.stringify($scope.dataModel));
+	};
+		
 
         $scope.addTopic = function(strTopicTitle){
             var newTopic = {title:strTopicTitle, fileContentKey: guid()};
