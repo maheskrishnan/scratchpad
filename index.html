@@ -42,6 +42,7 @@
 	    <ul><li><a href="" ng-click="export()">Export</a></li></ul>            
         </td>
         <td>
+            <input type="text" ng-model="exportData" ng-show="showExportDataBox" style="width:480px;"/>			
             <input type="text" ng-model="dataModel.currentTopic.title" ng-blur="saveDataModel()" style="width:480px;"/>
         </td>
     </tr>
@@ -317,21 +318,22 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         };
 
 
-		$scope.export = function() {
-			var exportDataModel = {};
-			exportDataModel.topics = [];
-			angular.forEach($scope.dataModel.topics, function(topic){
-				var exportTopic = {};
-				exportTopic.title = topic.title;
-				exportTopic.fileContentKey = topic.fileContentKey;	
-				exportTopic.fileContentKey = topic.dirty;	
-				exportTopic.fileContent = window.localStorage[topic.fileContentKey];	
-				exportDataModel.topics.push(exportTopic);
-			});
-			exportDataModel.currentTopic = $scope.dataModel.currentTopic;
-			alert(JSON.stringify(exportDataModel));
-		};
-		
+	$scope.export = function() {
+		var exportDataModel = {};
+		exportDataModel.topics = [];
+		angular.forEach($scope.dataModel.topics, function(topic){
+			var exportTopic = {};
+			exportTopic.title = topic.title;
+			exportTopic.fileContentKey = topic.fileContentKey;	
+			exportTopic.fileContentKey = topic.dirty;	
+			exportTopic.fileContent = window.localStorage[topic.fileContentKey];	
+			exportDataModel.topics.push(exportTopic);
+		});
+		exportDataModel.currentTopic = $scope.dataModel.currentTopic;
+		$scope.exportData = JSON.stringify(exportDataModel);
+		$scope.showExportDataBox = true;
+	};
+	
 		
 
         $scope.addTopic = function(strTopicTitle){
