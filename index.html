@@ -317,9 +317,21 @@ angular.module('ng').factory('keyboardManager', ['$window', '$timeout', function
         };
 
 
-	$scope.export = function() {
-		alert(JSON.stringify($scope.dataModel));
-	};
+		$scope.export = function() {
+			var exportDataModel = {};
+			exportDataModel.topics = [];
+			angular.forEach($scope.dataModel.topics, function(topic){
+				var exportTopic = {};
+				exportTopic.title = topic.title;
+				exportTopic.fileContentKey = topic.fileContentKey;	
+				exportTopic.fileContentKey = topic.dirty;	
+				exportTopic.fileContent = window.localStorage[topic.fileContentKey];	
+				exportDataModel.topics.push(exportTopic);
+			});
+			exportDataModel.currentTopic = $scope.dataModel.currentTopic;
+			alert(JSON.stringify(exportDataModel));
+		};
+		
 		
 
         $scope.addTopic = function(strTopicTitle){
